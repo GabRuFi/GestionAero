@@ -11,17 +11,27 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+
+import pkgControlleur.CtrlAeroport;
+
 import javax.swing.JTabbedPane;
 
 public class MainWindows {
-
-	private JFrame frmGestionaero;
-	private JTable table;
-	private JTable table_1;
-
+	
+	public JComboBox cmbAvion; 
+	public JButton btnAtterir;
+	public JButton btnDecoller; 
+	public JTable tblAvions;
+	public JTable tblRessources;
+	
+	private FrameAero frmGestionaero;
+ 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -29,8 +39,11 @@ public class MainWindows {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
 					MainWindows window = new MainWindows();
 					window.frmGestionaero.setVisible(true);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,7 +62,10 @@ public class MainWindows {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmGestionaero = new JFrame();
+		// INITIALISER LE CONTROLEUR 
+		// controler.startAeroport();
+		
+		frmGestionaero = new FrameAero();
 		frmGestionaero.setTitle("GestionAero");
 		frmGestionaero.setBounds(100, 100, 485, 320);
 		frmGestionaero.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,20 +75,26 @@ public class MainWindows {
 		frmGestionaero.getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnAtterir = new JButton("Atterir");
+		cmbAvion = new JComboBox();
+		panel.add(cmbAvion);
+		cmbAvion.setEnabled(false);
+		cmbAvion.setModel(new DefaultComboBoxModel(new String[] {"Commodor", "Jet", "Airbus"}));
+		
+		
+		
+		
+		btnAtterir = new JButton("Atterir");
 		panel.add(btnAtterir);
 		
-		JButton btnDecoller = new JButton("D\u00E9coller");
+		btnDecoller = new JButton("D\u00E9coller");
 		panel.add(btnDecoller);
+		
+		JButton btnRefrachir = new JButton("Rafra\u00EEchir");
+		panel.add(btnRefrachir);
 		
 		JPanel panel_1 = new JPanel();
 		frmGestionaero.getContentPane().add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JComboBox cmbAvion = new JComboBox();
-		cmbAvion.setEnabled(false);
-		cmbAvion.setModel(new DefaultComboBoxModel(new String[] {"Commodor", "Jet", "Airbus"}));
-		panel_1.add(cmbAvion);
 		
 		JButton btnPlay = new JButton("Play!");
 
@@ -86,9 +108,9 @@ public class MainWindows {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frmGestionaero.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		table = new JTable();
-		tabbedPane.addTab("Avion", null, table, null);
-		table.setModel(new DefaultTableModel(
+		tblAvions = new JTable();
+		tabbedPane.addTab("Avion", null, tblAvions, null);
+		tblAvions.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Gyrophare", "Arriver", ""},
 				{"Newton", "Acqu\u00E9rir Piste", "Piste Bleue"},
@@ -106,8 +128,8 @@ public class MainWindows {
 			}
 		});
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
+		tblRessources = new JTable();
+		tblRessources.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Fuel", "2", "0", "Disponible"},
 				{"Piste", "2", "1", "Disponible"},
@@ -125,22 +147,20 @@ public class MainWindows {
 				return columnEditables[column];
 			}
 		});
-		tabbedPane.addTab("Ressource", null, table_1, null);
-		table.getColumnModel().getColumn(1).setPreferredWidth(93);
 		
-		btnAtterir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				cmbAvion.setEnabled(true);
-				btnPlay.setEnabled(true);
-			}
-		});
-		
+		tabbedPane.addTab("Ressource", null, tblRessources, null);
+		tblAvions.getColumnModel().getColumn(1).setPreferredWidth(93);
+
 		btnPlay.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+
+				// TODO - MAJ LISTE D'AVIONS 
+				
 				int idSelectionAvion = cmbAvion.getSelectedIndex();
+				// LANCER DECOLLAGE OU ATTERISSAGE 
+				
 				cmbAvion.setEnabled(false);
 				btnPlay.setEnabled(false);
 			}
@@ -150,9 +170,93 @@ public class MainWindows {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+				// TODO - MAJ LISTE D'AVIONS
+				decollerAvion(cmbAvion.getSelectedItem().toString());
+				
 				cmbAvion.setEnabled(true);
 				btnPlay.setEnabled(true);
 			}
 		});
+		
+
+		
+		btnAtterir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				// TODO - MAJ LISTE D'AVIONS 
+				
+				cmbAvion.setEnabled(true);
+				btnPlay.setEnabled(true);
+			}
+		});
+		
+		btnRefrachir.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				rafraichirInterface();
+			}
+		});
+		
+		SwingUtilities.invokeLater(frmGestionaero);
+		
 	}
+	
+	public void rafraichirInterface(){
+		// TODO - Rafraîchir Tableau Avions
+		// RAFRAICHIR LA LISTE DES AVIONS 
+		ArrayList<String> listeA = frmGestionaero.getAvionsInactifs();
+		cmbAvion.removeAllItems();
+		
+		for(String item : listeA){
+			cmbAvion.addItem(item);
+		}
+		cmbAvion.setEnabled(listeA.size() > 0);
+		btnDecoller.setEnabled(listeA.size() > 0);
+		btnAtterir.setEnabled(listeA.size() > 0);
+		
+		// OBTENIR AVIONS 
+		listeA = frmGestionaero.getListeNomsAvions();
+		
+		// OBTENIR LA LISTE DES ETATS 
+		ArrayList<String> listeEA = frmGestionaero.getListeEtatsAvions();
+		
+		
+		// OBTENIR LA LISTE DES RESSOURCES ACQUISES PAR AVION
+		ArrayList<String> listeRA = frmGestionaero.getListeAvionsRessources();
+		
+		// TROUVER TAILLE TABLEAU RESSOURCES
+		int maxTbl = Math.min(listeA.size(), listeEA.size());
+		maxTbl = Math.min(maxTbl, listeRA.size());
+		
+		// RAFRAICHIR TABLEAU AVIONS
+		tblAvions.removeAll();
+		
+		DefaultTableModel tableModel = new DefaultTableModel();
+		tableModel.addColumn("Avion");
+		tableModel.addColumn("Etat");
+		tableModel.addColumn("Ressource");
+		tblAvions.setModel(tableModel);
+		
+		for (int id = 0; id < maxTbl; id++){
+			// PUSH ROWS
+			tableModel.addRow(new Object[]{listeA.get(id), listeEA.get(id), listeRA.get(id)});
+		}
+		
+		// TODO - Rafraîchir Tableau Ressources
+		// RAFRAICHIR LA LISTE DES RESSOURCES
+		ArrayList<String> listeR = frmGestionaero.getRessources();
+		
+		// OBTENIR LES RESSOURCES
+		
+		// TROUVER TAILLE TABLEAU RESSOURCES
+		
+		// RAFRAICHIR TABLEAU RESSOURCES
+	}
+	
+	public void decollerAvion(String nom){
+		frmGestionaero.startAvion(nom);
+	}
+	
+	
 }

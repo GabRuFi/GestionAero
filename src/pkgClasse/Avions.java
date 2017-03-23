@@ -62,7 +62,7 @@ public class Avions
 	
 	public void setNomAvion(int index, String newName)
 	{	
-		this.avions.get(index).setName(newName);
+		this.avions.get(index).setNom(newName);
 	}
 	
 	/*
