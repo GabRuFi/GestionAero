@@ -3,6 +3,8 @@ package pkgClasse;
 public class Avion extends Thread 
 {
 	String name = "Avion";
+	String etat = "Inactif";
+	String ressourceAcquise = "Aucune";
 	String nom = "Avion";
 	Integer index;
 	
@@ -41,6 +43,7 @@ public class Avion extends Thread
 	public void arrive() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
+		etat = "Arrive";
 		logStart(method);
 		
 		logEnd(method);
@@ -49,6 +52,7 @@ public class Avion extends Thread
 	public void atterit() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
+		etat = "Atterit";
 		logStart(method);	
 		
 		Integer i = -1;
@@ -103,6 +107,7 @@ public class Avion extends Thread
 	public void debarque() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
+		etat = "Debarque";
 		logStart(method);
 		
 		Integer i = -1;
@@ -154,6 +159,7 @@ public class Avion extends Thread
 	public void gare() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
+		etat = "Se gare";
 		logStart(method);
 		
 		logEnd(method);
@@ -162,6 +168,7 @@ public class Avion extends Thread
 	public void sort() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
+		etat = "Sort";
 		logStart(method);
 		
 		logEnd(method);
@@ -170,6 +177,7 @@ public class Avion extends Thread
 	public void controle() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
+		etat = "Passe au contrôle";
 		logStart(method);
 		
 		Integer i = -1;
@@ -222,6 +230,7 @@ public class Avion extends Thread
 	public void remplit() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
+		etat = "Remplit";
 		logStart(method);
 		
 		Integer i = -1;
@@ -274,6 +283,7 @@ public class Avion extends Thread
 	public void embarque() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
+		etat = "Embarque";
 		logStart(method);
 		
 		Integer i = -1;
@@ -325,6 +335,7 @@ public class Avion extends Thread
 	public void decolle() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
+		etat = "Decolle";
 		logStart(method);
 		
 		Integer i = -1;
@@ -397,6 +408,16 @@ public class Avion extends Thread
 	{
 		atterir();		
 		decoller();		
+	}
+	
+	public void execDecollage() 
+	{
+		decoller();		
+	}	
+	
+	public void execAtterrissage() 
+	{
+		atterir();		
 	}	
 	
 	public void log(String action)
@@ -419,10 +440,12 @@ public class Avion extends Thread
 		log("Sleep/wait");
 	}
 	
+	/*
 	public static void main(String[] args) {
-		Avion avion = new Avion(0, 2 ,2, 2, 2, 10);			
+		Avion avion = new Avion(0, 2 ,2, 2, 2);			
 		avion.exec();
-	}	
+	}
+	*/	
 	
 	public Fuels getFuels()
 	{
