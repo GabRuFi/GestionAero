@@ -32,6 +32,7 @@ public class FrameAero extends JFrame implements Runnable {
 
 	public synchronized void initAeroport(){
 		aeroport.initialiserAeroport(6, 2, 2, 2, 2, 8);
+		aeroport.startAeroport();
 	}
 
 	public synchronized ArrayList<String> getListeNomsAvions(){

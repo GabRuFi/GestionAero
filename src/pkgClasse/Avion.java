@@ -382,6 +382,7 @@ public class Avion extends Thread
 			pistesLock -= 1;
 			Pistes pistes = this.getPistes();
 			pistes.put(this.index, i);
+			etat = "Inactif";
 		}		
 		
 		logEnd(method);

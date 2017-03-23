@@ -202,6 +202,8 @@ public class MainWindows {
 		
 	}
 	
+	
+	
 	public void rafraichirInterface(){
 		// TODO - Rafraîchir Tableau Avions
 		// RAFRAICHIR LA LISTE DES AVIONS 
@@ -220,7 +222,6 @@ public class MainWindows {
 		
 		// OBTENIR LA LISTE DES ETATS 
 		ArrayList<String> listeEA = frmGestionaero.getListeEtatsAvions();
-		
 		
 		// OBTENIR LA LISTE DES RESSOURCES ACQUISES PAR AVION
 		ArrayList<String> listeRA = frmGestionaero.getListeAvionsRessources();
