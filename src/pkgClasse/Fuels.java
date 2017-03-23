@@ -3,7 +3,6 @@ package pkgClasse;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
 public class Fuels extends Resources 
 {			
 	public Fuels(Integer amount) {
