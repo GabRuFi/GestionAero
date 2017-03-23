@@ -31,10 +31,20 @@ public class FrameAero extends JFrame implements Runnable {
 	}
 
 	public synchronized void initAeroport(){
-		aeroport.initialiserAeroport(6, 2, 2, 2, 2, 8);
+		aeroport.initialiserAeroport(6, 2, 2, 2, 2, 30);
+		// aeroport.startAeroport();
+	}
+	
+	public synchronized void lancerSimulation(){
 		aeroport.startAeroport();
 	}
 
+	public synchronized void initAeroport(int nAvions, int nFuels, int nGates, int nPistes, int nTechniques, int maxA){
+		aeroport = new CtrlAeroport();
+		aeroport.initialiserAeroport(nAvions, nFuels, nGates, nPistes, nTechniques, maxA);
+		// aeroport.startAeroport();
+	}
+	
 	public synchronized ArrayList<String> getListeNomsAvions(){
 		setListeAvions(this.aeroport.getListeNoms());
 		return this.listeAvions; 
@@ -76,7 +86,7 @@ public class FrameAero extends JFrame implements Runnable {
 		this.listeEtatsRessources = nEtatsRessources; 
 	}
 	
-	public synchronized void startAvion(String nom){
+	public synchronized void startAvion(String nom, int action){
 		boolean notFound = true; 
 		int index = 0; 
 		while (notFound && index < listeAvions.size()){
@@ -85,10 +95,10 @@ public class FrameAero extends JFrame implements Runnable {
 			}
 		}
 		if (notFound){
-			// throw ("Avion non trouvé");
+			System.out.println("Avion non trouvé");
 		}
 		else{
-			// aeroport.startAeroportAtIndex(index);
+			// aeroport.startAeroportAtIndex(index, action);
 		}
 	}
 

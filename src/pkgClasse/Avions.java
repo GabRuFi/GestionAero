@@ -82,8 +82,15 @@ public class Avions
 	// Lancer l'exécution d'un thread Avion
 	public void startAvion(int index)
 	{	
+		/*
+		synchronized (avions) 
+		{
+			this.avions.get(index).setAction(action);
+		}
+		*/
 		this.avions.get(index).start();
 	}
+<<<<<<< HEAD
 	
 	// Lancer uniquement le décollage
 	public void startDecollage(int index)
@@ -96,6 +103,8 @@ public class Avions
 	{	
 		this.avions.get(index).execAtterrissage();
 	}
+=======
+>>>>>>> origin/master
 
 	public ArrayList<String> getRessources() {
 		ArrayList<String> tblRessources = new ArrayList<String>();
