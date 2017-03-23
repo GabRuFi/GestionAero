@@ -1,0 +1,42 @@
+Bonjour apprenti gestionnaire d'aéroport et bienvenue dans l'application GestionAero! Suivez nos instructions pour bien comprendre ce projet et utiliser votre gestionnnaire d'aéroport comme un professionnel... 
+
+Pour s'assurer d'avoir un projet Eclipse qui fonctionne, vous aurez les fichiers: 
+.classpath
+.project
+.README.md 
+Ainsi que les dossier bin, images et src. 
+
+Le projet sera centralisé dans le dossier src. 
+En parcourant le package de classe (pkgClasse), vous y trouverez les classes suivantes: 
+	Avion.java
+	Avions.java
+	Fuel.java
+	Fuels.java
+	Gate.java
+	Gates.java
+	Piste.java
+	Pistes.java
+	Resource.java
+	Resources.java
+	Technique
+	Techniques.java
+
+
+Afin de gérer ces classes, vous aurez besoin du package controlleur (pkgControlleur) qui contiendra: 
+	Aeroport.java
+	CtrlAeroport.java
+
+
+Votre super interface utilisateur se trouve dans votre package UInterface! 
+Votre fenêtre principale est héritée de FrameAero. 
+	FrameAero.java
+	MainWindows.java
+
+
+Ajouter votre projet dans votre IDE Eclipse et n'attendez-plus... lancez-le! 
+Vous verrez en temps réel l'état de vos avions et vos ressources occupés. 
+Amusez-vous à configurer votre nombre d'avions ou de ressources, puis à jouer votre simulation. 
+Tous les avions arriverons immédiatement, prêts à atterrir - mais pas tous en même temps quand même, du moins pas si vous n'avez pas assez de ressources... 
+
+
+Bonne simulation! 
