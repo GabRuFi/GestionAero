@@ -15,11 +15,21 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
+import pkgClasse.Avion;
 import pkgControlleur.CtrlAeroport;
 
 import javax.swing.JTabbedPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import java.awt.Dimension;
 
 public class MainWindows {
 	
@@ -31,6 +41,16 @@ public class MainWindows {
 	
 	private FrameAero frmGestionaero;
  
+	private Timer timer;
+	 
+	public ActionListener performRefresh = new ActionListener(){
+		public void actionPerformed(ActionEvent evt)
+		{
+		/*System.out.println("Rafraîchissement...");*/
+		rafraichirInterface();
+		}
+	};
+	
 	
 	/**
 	 * Launch the application.
@@ -67,7 +87,7 @@ public class MainWindows {
 		
 		frmGestionaero = new FrameAero();
 		frmGestionaero.setTitle("GestionAero");
-		frmGestionaero.setBounds(100, 100, 485, 320);
+		frmGestionaero.setBounds(100, 100, 517, 273);
 		frmGestionaero.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmGestionaero.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -102,8 +122,112 @@ public class MainWindows {
 		panel_1.add(btnPlay);
 		
 		JPanel panel_2 = new JPanel();
-		frmGestionaero.getContentPane().add(panel_2, BorderLayout.EAST);
-		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel_2.setBorder(new EmptyBorder(5, 5, 5, 5));
+		frmGestionaero.getContentPane().add(panel_2, BorderLayout.WEST);
+		GridBagLayout gbl_panel_2 = new GridBagLayout();
+		gbl_panel_2.columnWidths = new int[]{86, 39, 0};
+		gbl_panel_2.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0};
+		gbl_panel_2.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel_2.setLayout(gbl_panel_2);
+		
+		JLabel lblNewLabel = new JLabel("Nombre d'avions: ");
+		lblNewLabel.setPreferredSize(new Dimension(106, 14));
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridy = 0;
+		panel_2.add(lblNewLabel, gbc_lblNewLabel);
+		
+		JSpinner spnAvions = new JSpinner();
+		spnAvions.setModel(new SpinnerNumberModel(6, 0, 30, 1));
+		GridBagConstraints gbc_spnAvions = new GridBagConstraints();
+		gbc_spnAvions.insets = new Insets(0, 0, 5, 0);
+		gbc_spnAvions.anchor = GridBagConstraints.NORTHWEST;
+		gbc_spnAvions.gridx = 1;
+		gbc_spnAvions.gridy = 0;
+		panel_2.add(spnAvions, gbc_spnAvions);
+		
+		JLabel lblNombreDeFuel = new JLabel("Nombre de fuels: ");
+		lblNombreDeFuel.setPreferredSize(new Dimension(106, 14));
+		lblNombreDeFuel.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblNombreDeFuel.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_lblNombreDeFuel = new GridBagConstraints();
+		gbc_lblNombreDeFuel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNombreDeFuel.gridx = 0;
+		gbc_lblNombreDeFuel.gridy = 1;
+		panel_2.add(lblNombreDeFuel, gbc_lblNombreDeFuel);
+		
+		JSpinner spnFuels = new JSpinner();
+		spnFuels.setModel(new SpinnerNumberModel(2, 0, 10, 1));
+		GridBagConstraints gbc_spnFuels = new GridBagConstraints();
+		gbc_spnFuels.insets = new Insets(0, 0, 5, 0);
+		gbc_spnFuels.gridx = 1;
+		gbc_spnFuels.gridy = 1;
+		panel_2.add(spnFuels, gbc_spnFuels);
+		
+		JLabel lblNewLabel_1 = new JLabel("Nombre de gates: ");
+		lblNewLabel_1.setPreferredSize(new Dimension(106, 14));
+		lblNewLabel_1.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_1.gridx = 0;
+		gbc_lblNewLabel_1.gridy = 2;
+		panel_2.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		
+		JSpinner spnGates = new JSpinner();
+		spnGates.setModel(new SpinnerNumberModel(2, 0, 10, 1));
+		GridBagConstraints gbc_spnGates = new GridBagConstraints();
+		gbc_spnGates.insets = new Insets(0, 0, 5, 0);
+		gbc_spnGates.gridx = 1;
+		gbc_spnGates.gridy = 2;
+		panel_2.add(spnGates, gbc_spnGates);
+		
+		JLabel lblNombreDeContrle = new JLabel("Nombre de contr\u00F4les: ");
+		lblNombreDeContrle.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblNombreDeContrle.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_lblNombreDeContrle = new GridBagConstraints();
+		gbc_lblNombreDeContrle.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNombreDeContrle.gridx = 0;
+		gbc_lblNombreDeContrle.gridy = 3;
+		panel_2.add(lblNombreDeContrle, gbc_lblNombreDeContrle);
+		
+		JSpinner spnTechniques = new JSpinner();
+		spnTechniques.setModel(new SpinnerNumberModel(2, 0, 10, 1));
+		GridBagConstraints gbc_spnTechniques = new GridBagConstraints();
+		gbc_spnTechniques.insets = new Insets(0, 0, 5, 0);
+		gbc_spnTechniques.gridx = 1;
+		gbc_spnTechniques.gridy = 3;
+		panel_2.add(spnTechniques, gbc_spnTechniques);
+		
+		JLabel lblNombreDePistes = new JLabel("Nombre de pistes");
+		lblNombreDePistes.setPreferredSize(new Dimension(106, 14));
+		lblNombreDePistes.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblNombreDePistes.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_lblNombreDePistes = new GridBagConstraints();
+		gbc_lblNombreDePistes.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNombreDePistes.gridx = 0;
+		gbc_lblNombreDePistes.gridy = 4;
+		panel_2.add(lblNombreDePistes, gbc_lblNombreDePistes);
+		
+		JSpinner spnPistes = new JSpinner();
+		spnPistes.setModel(new SpinnerNumberModel(2, 0, 10, 1));
+		GridBagConstraints gbc_spnPistes = new GridBagConstraints();
+		gbc_spnPistes.insets = new Insets(0, 0, 5, 0);
+		gbc_spnPistes.gridx = 1;
+		gbc_spnPistes.gridy = 4;
+		panel_2.add(spnPistes, gbc_spnPistes);
+		
+		JButton btnConfigurer = new JButton("Configurer");
+		GridBagConstraints gbc_btnConfigurer = new GridBagConstraints();
+		gbc_btnConfigurer.insets = new Insets(0, 0, 0, 5);
+		gbc_btnConfigurer.gridx = 0;
+		gbc_btnConfigurer.gridy = 5;
+		panel_2.add(btnConfigurer, gbc_btnConfigurer);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frmGestionaero.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -190,6 +314,18 @@ public class MainWindows {
 			}
 		});
 		
+
+		btnConfigurer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Avion(i, nFuels, nGates, nPistes, nTechniques, maxA)
+				configurer((int)(spnAvions.getValue()), 
+						(int)(spnFuels.getValue()), 
+						(int)(spnGates.getValue()), 
+						(int)(spnPistes.getValue()), 
+						(int)(spnTechniques.getValue()), 30);
+			}
+		});
+		
 		btnRefrachir.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
@@ -200,9 +336,15 @@ public class MainWindows {
 		
 		SwingUtilities.invokeLater(frmGestionaero);
 		
+		timer = new Timer(100, performRefresh);
+		timer.setRepeats(true);
+		timer.start();
+		
 	}
 	
-	
+	public void configurer(int i, int nFuels, int nGates, int nPistes, int nTechniques, int maxA){
+		frmGestionaero.initAeroport();
+	}
 	
 	public void rafraichirInterface(){
 		// TODO - Rafraîchir Tableau Avions
