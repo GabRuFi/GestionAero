@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Resources {
 	
-	String name;
-	String nameSingle;
-	Integer N;
+	private String name;
+	private String nameSingle;
+	private Integer N;
 	
-	ArrayList<Boolean> availableBitmap;
+	private ArrayList<Boolean> availableBitmap;
 	
-	ArrayList<Resource> resources = new ArrayList<Resource>(); 
+	private ArrayList<Resource> resources = new ArrayList<Resource>(); 
 	
 	public Resources(String type, String name, String nameSingle, Integer amount)
 	{
@@ -40,6 +40,14 @@ public class Resources {
 			
 			availableBitmap.add(true);
 		}									
+	}
+	
+	public int getN(){
+		return this.N;
+	}
+	
+	public ArrayList<Resource> getResources(){
+		return this.resources;
 	}
 	
 	// Protégé par mutex dans Avion

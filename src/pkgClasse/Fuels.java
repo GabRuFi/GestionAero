@@ -1,5 +1,8 @@
 package pkgClasse;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class Fuels extends Resources 
 {			
 	public Fuels(Integer amount) {
@@ -10,9 +13,17 @@ public class Fuels extends Resources
 	{
 		Fuels resources = new Fuels(4);	
 		
-		for (int i = 0; i < resources.N; i++)
+		for (int i = 0; i < resources.getN(); i++)
 		{
-			resources.resources.get(i).exec();
+			resources.getResources().get(i).exec();
 		}		
-	}	
+	}
+	
+	public ArrayList<String> obtenirNomsRessources(){
+		ArrayList<String> listeR = new ArrayList<String>();
+		for (int i = 0; i < getN(); i ++){
+			listeR.add("Fuel " + i);
+		}
+		return listeR;
+	}
 }

@@ -1,5 +1,7 @@
 package pkgControlleur;
 
+import java.util.ArrayList;
+
 import pkgClasse.Avions;
 import pkgClasse.Fuels;
 import pkgClasse.Gates;
@@ -89,7 +91,55 @@ public class Aeroport {
 		return Avion.compteur;
 	}
 	
+	public ArrayList<String> getNomsAvions(){
+		return this.avions.getNomsAvions();
+	}
+
 	
+	public ArrayList<String> getEtatsAvions(){
+		return this.avions.getEtats();
+	}
+
+	public ArrayList<String> getNomsRessources() {
+		ArrayList<String> listeR = new ArrayList<String>(); 
+		
+		/*
+		synchronized (fuels) 
+		{
+			for (int index = 0; index < fuels.getN(); index++){
+				// listeR.addAll(fuels.obtenirNomsRessources());
+			}
+		}
+		
+		synchronized (gates) 
+		{
+			Gates tblG = gates;
+			for (int index = 0; index < tblG.getN(); index++){
+				listeR.addAll(gates.obtenirNomsRessources());
+			}
+		}
+		
+		synchronized (pistes) 
+		{
+			Pistes tblP = pistes;
+			for (int index = 0; index < tblP.getN(); index++){
+				listeR.addAll(pistes.obtenirNomsRessources());
+			}
+		}
+		
+		synchronized (techniques) 
+		{
+			Techniques tblT = techniques;
+			for (int index = 0; index < tblT.getN(); index++){
+				listeR.addAll(techniques.obtenirNomsRessources());
+			}
+		}
+		*/
+		
+		return listeR;
+	}
+	
+	/*
 	public static void main(String[] args) {
 		
 		Integer nA = 6;
@@ -97,9 +147,8 @@ public class Aeroport {
 		Integer nG = 2;
 		Integer nP = 2;
 		Integer nT = 2;
-		Integer maxA = 10;
 		
-		Aeroport aeroport = new Aeroport(nA, nF, nG, nP, nT, maxA);
+		Aeroport aeroport = new Aeroport(nA, nF, nG, nP, nT);
 		aeroport.avions.setNomAvion(0, "Led Zeppelin");
 		aeroport.avions.setNomAvion(1, "Gyrophare");
 		aeroport.avions.setNomAvion(2, "Airbus");
@@ -111,8 +160,8 @@ public class Aeroport {
 		System.out.println("     Set-up     ");
 		System.out.println("================");
 		
-		/*aeroport.avions.avions.get(4).getPistes().get(4);
-		aeroport.avions.avions.get(2).getFuels().get(2);*/
+		// aeroport.avions.avions.get(4).getPistes().get(4);
+		// aeroport.avions.avions.get(2).getFuels().get(2);
 		
 		System.out.println("================");
 		System.out.println("Start simulation");
@@ -122,5 +171,6 @@ public class Aeroport {
 		{						
 			aeroport.avions.startAvion(i);
 		}		
-	}			
+	}
+	*/	
 }

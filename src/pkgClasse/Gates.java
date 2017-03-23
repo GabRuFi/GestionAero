@@ -1,5 +1,7 @@
 package pkgClasse;
 
+import java.util.ArrayList;
+
 public class Gates extends Resources 
 {
 	public Gates(Integer amount) 
@@ -11,9 +13,17 @@ public class Gates extends Resources
 	{
 		Gates resources = new Gates(4);	
 		
-		for (int i = 0; i < resources.N; i++)
+		for (int i = 0; i < resources.getN(); i++)
 		{
-			resources.resources.get(i).exec();
+			resources.getResources().get(i).exec();
 		}		
-	}	
+	}
+
+	public ArrayList<String> obtenirNomsRessources(){
+		ArrayList<String> listeR = new ArrayList<String>();
+		for (int i = 0; i < getN(); i ++){
+			listeR.add("Gate " + i);
+		}
+		return listeR;
+	}
 }

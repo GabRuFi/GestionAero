@@ -1,5 +1,7 @@
 package pkgClasse;
 
+import java.util.ArrayList;
+
 public class Pistes extends Resources 
 {
 	public Pistes(Integer amount) {
@@ -10,9 +12,17 @@ public class Pistes extends Resources
 	{
 		Pistes resources = new Pistes(4);	
 		
-		for (int i = 0; i < resources.N; i++)
+		for (int i = 0; i < resources.getN(); i++)
 		{
-			resources.resources.get(i).exec();
+			resources.getResources().get(i).exec();
 		}		
-	}	
+	}
+
+	public ArrayList<String> obtenirNomsRessources(){
+		ArrayList<String> listeR = new ArrayList<String>();
+		for (int i = 0; i < getN(); i ++){
+			listeR.add("Piste " + i);
+		}
+		return listeR;
+	}
 }
