@@ -47,19 +47,46 @@ public class Avions
 		return this.avions;
 	}
 	
+	public ArrayList<String> getEtats()
+	{
+		ArrayList<String> listeEtats = new ArrayList<String>(); 
+		synchronized (avions) 
+		{
+			ArrayList<Avion> tblAvions = avions;
+			for (int index = 0; index < tblAvions.size(); index++){
+				listeEtats.add(tblAvions.get(index).getEtat());
+			}
+		}
+		return listeEtats;
+	}
+	
 	public void setNomAvion(int index, String newName)
 	{	
 		this.avions.get(index).setName(newName);
 	}
 	
+	/*
 	public static void main(String[] args) 
 	{
-		Avions avions = new Avions(25, 2, 2, 2, 2, 10);	
+		Avions avions = new Avions(25, 2, 2, 2, 2);	
 		
 		for (int i = 0; i < avions.N; i++)
 		{
 			avions.avions.get(i).start();
 		}	
+	}
+	*/
+	
+	public ArrayList<String> getNomsAvions(){
+		ArrayList<String> tblNoms = new ArrayList<String>();
+		synchronized (avions) 
+		{
+			ArrayList<Avion> tblAvions = avions;
+			for (int index = 0; index < tblAvions.size(); index++){
+				tblNoms.add(tblAvions.get(index).getNom());
+			}
+		}
+		return tblNoms;
 	}
 	
 	public void startAvion(int index)
@@ -67,4 +94,39 @@ public class Avions
 		this.avions.get(index).start();
 	}
 	
+	public void startDecollage(int index)
+	{	
+		this.avions.get(index).execDecollage();
+	}
+
+	public void startAtterrissage(int index)
+	{	
+		this.avions.get(index).execAtterrissage();
+	}
+
+	public ArrayList<String> getRessources() {
+		ArrayList<String> tblRessources = new ArrayList<String>();
+		synchronized (avions) 
+		{
+			ArrayList<Avion> tblAvions = avions;
+			for (int index = 0; index < tblAvions.size(); index++){
+				tblRessources.add(tblAvions.get(index).getRessourceAcquise());
+			}
+		}
+		return tblRessources;
+	}
+
+	public ArrayList<String> getAvionsInactifs() {
+		ArrayList<String> tblAvionsInactifs = new ArrayList<String>();
+		synchronized (avions) 
+		{
+			ArrayList<Avion> tblAvions = avions;
+			for (int index = 0; index < tblAvions.size(); index++){
+				if (tblAvions.get(index).getEtat().equals("Inactif")){
+					tblAvionsInactifs.add(tblAvions.get(index).getNom());
+				}
+			}
+		}
+		return tblAvionsInactifs;
+	}
 }

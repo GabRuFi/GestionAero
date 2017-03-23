@@ -477,6 +477,11 @@ public class Avion extends Thread
 		this.nom = newNom;
 	}
 	
+	public String getEtat()
+	{
+		return etat;
+	}
+	
 	public static void increaseCompteur()
 	{
 		synchronized (compteur)
@@ -521,6 +526,11 @@ public class Avion extends Thread
 			waitForAnalyse = false;
 			waitForFin = false;			
 		}
+	}
+	
+	public String getRessourceAcquise()
+	{
+		return ressourceAcquise;
 	}
 		
 	@Override
