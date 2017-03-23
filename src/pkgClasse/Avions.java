@@ -10,13 +10,13 @@ public class Avions
 	private ArrayList<Avion> avions = new ArrayList<Avion>();
 			
 	public Avions(Integer amount, Integer nFuels, Integer nGates, 
-			Integer nPistes, Integer nTechniques)
+			Integer nPistes, Integer nTechniques, Integer maxA)
 	{
 		this.N = amount;							
 		
 		for (int i = 0; i < N; i++)
 		{									
-			Avion avion = new Avion(i, nFuels, nGates, nPistes, nTechniques);										
+			Avion avion = new Avion(i, nFuels, nGates, nPistes, nTechniques, maxA);										
 			
 			avions.add(avion);									
 		}									
@@ -54,7 +54,7 @@ public class Avions
 	
 	public static void main(String[] args) 
 	{
-		Avions avions = new Avions(25, 2, 2, 2, 2);	
+		Avions avions = new Avions(25, 2, 2, 2, 2, 10);	
 		
 		for (int i = 0; i < avions.N; i++)
 		{

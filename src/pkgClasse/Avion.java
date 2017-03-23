@@ -16,12 +16,21 @@ public class Avion extends Thread
 	static Integer pistesLock = 0;
 	static Integer techniquesLock = 0;
 	
+	public static Integer compteur = 0;
+	public static Integer maxAvions;
+	
+	public static Boolean waitForDebut = false;
+	public static Boolean waitForAnalyse = false;
+	public static Boolean waitForFin = false;
+	
 	Integer delay = 100;
 	Integer delayLoop = 300;
 		
-	public Avion(int i, Integer nFuels, Integer nGates, Integer nPistes, Integer nTechniques) 
+	public Avion(int i, Integer nFuels, Integer nGates, Integer nPistes, 
+			Integer nTechniques, Integer maxA) 
 	{						
-		this.index = i;			
+		this.index = i;		
+		maxAvions = maxA;
 		
 		fuels = new Fuels(nFuels); 
 		gates = new Gates(nGates);
@@ -70,6 +79,8 @@ public class Avion extends Thread
 			}							
 		}			
 		
+		increaseCompteur();
+		
 		try
 		{
 			Thread.sleep(delay);	
@@ -77,7 +88,7 @@ public class Avion extends Thread
 		catch (Throwable e)
 		{
 			
-		}
+		}				
 		
 		synchronized (pistes) 
 		{
@@ -342,7 +353,9 @@ public class Avion extends Thread
 					}
 				}
 			}							
-		}	
+		}
+		
+		increaseCompteur();
 		
 		try
 		{
@@ -407,7 +420,7 @@ public class Avion extends Thread
 	}
 	
 	public static void main(String[] args) {
-		Avion avion = new Avion(0, 2 ,2, 2, 2);			
+		Avion avion = new Avion(0, 2 ,2, 2, 2, 10);			
 		avion.exec();
 	}	
 	
@@ -441,6 +454,52 @@ public class Avion extends Thread
 		this.nom = newNom;
 	}
 	
+	public static void increaseCompteur()
+	{
+		synchronized (compteur)
+		{
+			compteur++;
+			
+			if (compteur >= maxAvions)
+			{
+				waitForDebut = true;
+			}
+		}
+	}
+	
+	public static void resetCompteur()
+	{
+		synchronized (compteur)
+		{
+			compteur = 0;
+		}
+	}
+	
+	public static void debut()
+	{
+		resetCompteur();
+		
+		synchronized (waitForDebut) {
+			waitForDebut = false;			
+		}
+	}
+		
+	public static void analyse()
+	{
+		synchronized (waitForAnalyse) {
+			waitForAnalyse = false;			
+		}
+	}
+	
+	public static void fin()
+	{
+		synchronized (waitForFin) {
+			waitForDebut = false;
+			waitForAnalyse = false;
+			waitForFin = false;			
+		}
+	}
+		
 	@Override
 	public void run()
 	{
@@ -455,3 +514,4 @@ public class Avion extends Thread
 				+ Avion.pistesLock + " (P) " + Avion.techniquesLock + " (T)");			
 	}	
 }
+

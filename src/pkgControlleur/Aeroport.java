@@ -5,6 +5,7 @@ import pkgClasse.Fuels;
 import pkgClasse.Gates;
 import pkgClasse.Pistes;
 import pkgClasse.Techniques;
+import pkgClasse.Avion;
 
 public class Aeroport {
 			
@@ -19,21 +20,49 @@ public class Aeroport {
 	public Fuels fuels;
 	public Gates gates;
 	public Pistes pistes;
-	public Techniques techniques;
+	public Techniques techniques;	
 	
 	public Avions avions;
 	
+	public Integer maxAvions;
+	
 	public Aeroport(Integer nAvions, Integer nFuels, 
-			Integer nGates, Integer nPistes, Integer nTechniques) 
+			Integer nGates, Integer nPistes, Integer nTechniques, Integer maxA) 
 	{										
 		this.nAvions = nAvions;
 		this.nFuels = nFuels;
 		this.nGates = nGates;
 		this.nPistes = nPistes;
 		this.nTechniques = nTechniques;
+		this.maxAvions = maxA;
 				
-		avions = new Avions(nAvions, nFuels, nGates, nPistes, nTechniques);					
+		avions = new Avions(nAvions, nFuels, nGates, nPistes, nTechniques, maxAvions);					
 	}	
+	
+	public void lancerAnalyse()
+	{			
+		synchronized(Avion.waitForDebut)
+		{
+			synchronized(Avion.waitForAnalyse)
+			{
+				synchronized(Avion.waitForFin)
+				{
+			
+					if (Avion.waitForDebut == false)
+					{
+						System.out.println("Vous devez attendre d'avoir le bon nombre d'avions...");
+						return;
+					}
+					else
+					{
+						Avion.debut();								
+						Avion.analyse();
+						Avion.fin();
+					}
+				}
+			}						
+		}			
+	}
 	
 	public Fuels getFuels()
 	{
@@ -55,6 +84,12 @@ public class Aeroport {
 		return techniques;
 	}
 	
+	public Integer getCompteur()
+	{
+		return Avion.compteur;
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		Integer nA = 6;
@@ -62,8 +97,9 @@ public class Aeroport {
 		Integer nG = 2;
 		Integer nP = 2;
 		Integer nT = 2;
+		Integer maxA = 10;
 		
-		Aeroport aeroport = new Aeroport(nA, nF, nG, nP, nT);
+		Aeroport aeroport = new Aeroport(nA, nF, nG, nP, nT, maxA);
 		aeroport.avions.setNomAvion(0, "Led Zeppelin");
 		aeroport.avions.setNomAvion(1, "Gyrophare");
 		aeroport.avions.setNomAvion(2, "Airbus");
