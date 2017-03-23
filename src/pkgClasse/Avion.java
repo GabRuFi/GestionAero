@@ -6,6 +6,7 @@ public class Avion extends Thread
 	String etat = "Inactif";
 	String ressourceAcquise = "Aucune";
 	String nom = "Avion";
+	// int action = 0; 
 	Integer index;
 	
 	static Fuels fuels;
@@ -32,6 +33,7 @@ public class Avion extends Thread
 			Integer nTechniques, Integer maxA) 
 	{						
 		this.index = i;		
+		this.nom = "Avion" + i;
 		maxAvions = maxA;
 		
 		fuels = new Fuels(nFuels); 
@@ -52,7 +54,6 @@ public class Avion extends Thread
 	public void atterit() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
-		etat = "Atterit";
 		logStart(method);	
 		
 		Integer i = -1;
@@ -66,6 +67,8 @@ public class Avion extends Thread
 				
 				if (i != -1)
 				{
+					etat = "Atterit sur piste " + i;
+					ressourceAcquise = "Piste " + i; 
 					pistesLock += 1;
 				}
 				else
@@ -99,6 +102,8 @@ public class Avion extends Thread
 			pistesLock -= 1;
 			Pistes pistes = this.getPistes();
 			pistes.put(this.index, i);
+			etat = "En attente de porte...";
+			ressourceAcquise = "Aucune";
 		}						
 		
 		logEnd(method);
@@ -107,7 +112,6 @@ public class Avion extends Thread
 	public void debarque() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
-		etat = "Debarque";
 		logStart(method);
 		
 		Integer i = -1;
@@ -118,9 +122,11 @@ public class Avion extends Thread
 			{				
 				Gates gates = this.getGates();
 				i = gates.get(this.index);
-				
+
 				if (i != -1)
 				{
+					etat = "Debarque par la porte " + i;
+					ressourceAcquise = "Poste " + i;
 					gatesLock += 1;
 				}
 				else
@@ -151,6 +157,9 @@ public class Avion extends Thread
 		{
 			gatesLock -= 1;
 			gates.put(this.index, i);
+
+			etat = "Débarquement complet...";
+			ressourceAcquise = "Aucune";
 		}
 				
 		logEnd(method);
@@ -163,6 +172,7 @@ public class Avion extends Thread
 		logStart(method);
 		
 		logEnd(method);
+		etat = "Inactif";
 	}	
 	
 	public void sort() 
@@ -177,7 +187,6 @@ public class Avion extends Thread
 	public void controle() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
-		etat = "Passe au contrôle";
 		logStart(method);
 		
 		Integer i = -1;
@@ -191,6 +200,8 @@ public class Avion extends Thread
 				
 				if (i != -1)
 				{
+					etat = "Passe au contrôle " + i;
+					ressourceAcquise = "Technique " + i;
 					techniquesLock += 1;
 				}
 				else
@@ -219,18 +230,20 @@ public class Avion extends Thread
 		
 		synchronized (techniques) 
 		{
+			etat = "En attente de porte... ";
+			ressourceAcquise = "Aucune";
 			techniquesLock -= 1;
 			Techniques techniques = this.getTechniques();
 			techniques.put(this.index, i);
 		}	
 		
 		logEnd(method);
+
 	}
 
 	public void remplit() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
-		etat = "Remplit";
 		logStart(method);
 		
 		Integer i = -1;
@@ -244,6 +257,8 @@ public class Avion extends Thread
 				
 				if (i != -1)
 				{
+					etat = "Remplit avec fuels " + i;
+					ressourceAcquise = "Fuel " + i;
 					fuelsLock += 1;
 				}
 				else
@@ -272,6 +287,8 @@ public class Avion extends Thread
 		
 		synchronized (fuels) 
 		{
+			etat = "En attente de contrôle ... ";
+			ressourceAcquise = "Aucune";
 			fuelsLock -= 1;
 			Fuels fuels = this.getFuels();
 			fuels.put(this.index, i);
@@ -283,7 +300,6 @@ public class Avion extends Thread
 	public void embarque() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
-		etat = "Embarque";
 		logStart(method);
 		
 		Integer i = -1;
@@ -297,6 +313,8 @@ public class Avion extends Thread
 				
 				if (i != -1)
 				{
+					etat = "Embarque par la porte " + i;
+					ressourceAcquise = "Gate " + i;
 					gatesLock += 1;
 				}
 				else
@@ -325,6 +343,8 @@ public class Avion extends Thread
 		
 		synchronized (gates) 
 		{
+			etat = "En attente de piste... ";
+			ressourceAcquise = "Aucune";
 			gatesLock -= 1;
 			gates.put(this.index, i);
 		}
@@ -335,7 +355,6 @@ public class Avion extends Thread
 	public void decolle() 
 	{
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
-		etat = "Decolle";
 		logStart(method);
 		
 		Integer i = -1;
@@ -349,6 +368,8 @@ public class Avion extends Thread
 				
 				if (i != -1)
 				{
+					etat = "Decolle sur la piste " + i;
+					ressourceAcquise = "Piste " + i;
 					pistesLock += 1;
 				}
 				else
@@ -382,6 +403,7 @@ public class Avion extends Thread
 			pistesLock -= 1;
 			Pistes pistes = this.getPistes();
 			pistes.put(this.index, i);
+			ressourceAcquise = "Aucune"; 
 			etat = "Inactif";
 		}		
 		
@@ -542,10 +564,27 @@ public class Avion extends Thread
 				+ Avion.pistesLock + " (P) " + Avion.techniquesLock + " (T)");
 		
 		this.exec();
+		/*
+		if (action == 0){
+			this.exec();
+		}
+		else if (action == 1){
+			this.execAtterrissage();
+		}
+		else{
+			this.execDecollage();
+		}
+		*/
 		
 		System.out.println("État des locks (après " + this.index + ".Avion) : " 
 				+ Avion.fuelsLock + " (F) " + Avion.gatesLock + " (G) " 
 				+ Avion.pistesLock + " (P) " + Avion.techniquesLock + " (T)");			
-	}	
+	}
+
+	/*
+	public void setAction(int action) {
+		this.action = action;
+	}
+	*/	
 }
 

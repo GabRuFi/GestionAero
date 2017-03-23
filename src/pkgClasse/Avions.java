@@ -91,17 +91,13 @@ public class Avions
 	
 	public void startAvion(int index)
 	{	
+		/*
+		synchronized (avions) 
+		{
+			this.avions.get(index).setAction(action);
+		}
+		*/
 		this.avions.get(index).start();
-	}
-	
-	public void startDecollage(int index)
-	{	
-		this.avions.get(index).execDecollage();
-	}
-
-	public void startAtterrissage(int index)
-	{	
-		this.avions.get(index).execAtterrissage();
 	}
 
 	public ArrayList<String> getRessources() {

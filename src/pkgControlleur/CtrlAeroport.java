@@ -8,14 +8,13 @@ public class CtrlAeroport{
 	
 	public static void initialiserAeroport(int nA, int nF, int nG, int nP, int nT, int maxA)
 	{
-		nA = 6; 
 		aeroport = new Aeroport(nA, nF, nG, nP, nT, maxA);
-		aeroport.avions.setNomAvion(0, "Led Zeppelin");
-		aeroport.avions.setNomAvion(1, "Gyrophare");
-		aeroport.avions.setNomAvion(2, "Airbus");
-		aeroport.avions.setNomAvion(3, "Jet");
-		aeroport.avions.setNomAvion(4, "Commodor");
-		aeroport.avions.setNomAvion(5, "Newton");
+		// aeroport.avions.setNomAvion(0, "Led Zeppelin");
+		// aeroport.avions.setNomAvion(1, "Gyrophare");
+		// aeroport.avions.setNomAvion(2, "Airbus");
+		// aeroport.avions.setNomAvion(3, "Jet");
+		// aeroport.avions.setNomAvion(4, "Commodor");
+		// aeroport.avions.setNomAvion(5, "Newton");
 		
 
 		System.out.println("================");
@@ -46,22 +45,13 @@ public class CtrlAeroport{
 		
 	}
 	
-	public static void startAeroportAtIndex(int index){
+	public static void startAeroportAtIndex(int index, int action){
 
 		System.out.println("================");
-		System.out.println("Start simulation");
+		System.out.println("  Start avion  ");
 		System.out.println("================");
 		
-		aeroport.avions.startAvion(index);
-		
-	}
-	
-	public static void startDecollage(int index){
-		aeroport.avions.startDecollage(index);
-	}
-	
-	public static void startAtterrissage(int index){
-		aeroport.avions.startAtterrissage(index);
+		aeroport.avions.startAvion(index);		
 	}
 	
 	public static String getNomAtIndex(int index){

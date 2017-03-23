@@ -87,7 +87,7 @@ public class MainWindows {
 		
 		frmGestionaero = new FrameAero();
 		frmGestionaero.setTitle("GestionAero");
-		frmGestionaero.setBounds(100, 100, 517, 273);
+		frmGestionaero.setBounds(100, 100, 517, 256);
 		frmGestionaero.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmGestionaero.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -109,16 +109,11 @@ public class MainWindows {
 		btnDecoller = new JButton("D\u00E9coller");
 		panel.add(btnDecoller);
 		
-		JButton btnRefrachir = new JButton("Rafra\u00EEchir");
-		panel.add(btnRefrachir);
-		
 		JPanel panel_1 = new JPanel();
 		frmGestionaero.getContentPane().add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnPlay = new JButton("Play!");
-
-		btnPlay.setEnabled(false);
 		panel_1.add(btnPlay);
 		
 		JPanel panel_2 = new JPanel();
@@ -132,6 +127,8 @@ public class MainWindows {
 		panel_2.setLayout(gbl_panel_2);
 		
 		JLabel lblNewLabel = new JLabel("Nombre d'avions: ");
+		lblNewLabel.setMaximumSize(new Dimension(106, 14));
+		lblNewLabel.setMinimumSize(new Dimension(106, 14));
 		lblNewLabel.setPreferredSize(new Dimension(106, 14));
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -152,6 +149,8 @@ public class MainWindows {
 		panel_2.add(spnAvions, gbc_spnAvions);
 		
 		JLabel lblNombreDeFuel = new JLabel("Nombre de fuels: ");
+		lblNombreDeFuel.setMaximumSize(new Dimension(106, 14));
+		lblNombreDeFuel.setMinimumSize(new Dimension(106, 14));
 		lblNombreDeFuel.setPreferredSize(new Dimension(106, 14));
 		lblNombreDeFuel.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNombreDeFuel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -170,6 +169,8 @@ public class MainWindows {
 		panel_2.add(spnFuels, gbc_spnFuels);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nombre de gates: ");
+		lblNewLabel_1.setMaximumSize(new Dimension(106, 14));
+		lblNewLabel_1.setMinimumSize(new Dimension(106, 14));
 		lblNewLabel_1.setPreferredSize(new Dimension(106, 14));
 		lblNewLabel_1.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
@@ -205,6 +206,8 @@ public class MainWindows {
 		panel_2.add(spnTechniques, gbc_spnTechniques);
 		
 		JLabel lblNombreDePistes = new JLabel("Nombre de pistes");
+		lblNombreDePistes.setMaximumSize(new Dimension(106, 14));
+		lblNombreDePistes.setMinimumSize(new Dimension(106, 14));
 		lblNombreDePistes.setPreferredSize(new Dimension(106, 14));
 		lblNombreDePistes.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNombreDePistes.setHorizontalAlignment(SwingConstants.LEFT);
@@ -221,13 +224,6 @@ public class MainWindows {
 		gbc_spnPistes.gridx = 1;
 		gbc_spnPistes.gridy = 4;
 		panel_2.add(spnPistes, gbc_spnPistes);
-		
-		JButton btnConfigurer = new JButton("Configurer");
-		GridBagConstraints gbc_btnConfigurer = new GridBagConstraints();
-		gbc_btnConfigurer.insets = new Insets(0, 0, 0, 5);
-		gbc_btnConfigurer.gridx = 0;
-		gbc_btnConfigurer.gridy = 5;
-		panel_2.add(btnConfigurer, gbc_btnConfigurer);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frmGestionaero.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -279,14 +275,13 @@ public class MainWindows {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-
-				// TODO - MAJ LISTE D'AVIONS 
+				configurer((int)(spnAvions.getValue()), 
+						(int)(spnFuels.getValue()), 
+						(int)(spnGates.getValue()), 
+						(int)(spnPistes.getValue()), 
+						(int)(spnTechniques.getValue()), 30);
+				lancerSimulation();
 				
-				int idSelectionAvion = cmbAvion.getSelectedIndex();
-				// LANCER DECOLLAGE OU ATTERISSAGE 
-				
-				cmbAvion.setEnabled(false);
-				btnPlay.setEnabled(false);
 			}
 		});
 		
@@ -294,11 +289,7 @@ public class MainWindows {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				// TODO - MAJ LISTE D'AVIONS
-				decollerAvion(cmbAvion.getSelectedItem().toString());
-				
-				cmbAvion.setEnabled(true);
-				btnPlay.setEnabled(true);
+				// startAvion(cmbAvion.getSelectedItem().toString(), 2);
 			}
 		});
 		
@@ -307,30 +298,7 @@ public class MainWindows {
 		btnAtterir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				// TODO - MAJ LISTE D'AVIONS 
-				
-				cmbAvion.setEnabled(true);
-				btnPlay.setEnabled(true);
-			}
-		});
-		
-
-		btnConfigurer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// Avion(i, nFuels, nGates, nPistes, nTechniques, maxA)
-				configurer((int)(spnAvions.getValue()), 
-						(int)(spnFuels.getValue()), 
-						(int)(spnGates.getValue()), 
-						(int)(spnPistes.getValue()), 
-						(int)(spnTechniques.getValue()), 30);
-			}
-		});
-		
-		btnRefrachir.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				rafraichirInterface();
+				// startAvion(cmbAvion.getSelectedItem().toString(), 1);
 			}
 		});
 		
@@ -340,20 +308,30 @@ public class MainWindows {
 		timer.setRepeats(true);
 		timer.start();
 		
+		// SET VISIBLE POUR PARTIE NON UTILE  
+		cmbAvion.setVisible(false);
+		btnAtterir.setVisible(false);
+		btnDecoller.setVisible(false);
+		
 	}
 	
-	public void configurer(int i, int nFuels, int nGates, int nPistes, int nTechniques, int maxA){
-		frmGestionaero.initAeroport();
+	public void lancerSimulation(){
+		// SIMULATION PERMETTANT DE LANCER LES OPÉRATIONS POUR TOUS LES AVIONS 
+		frmGestionaero.lancerSimulation();
+	}
+	
+	public void configurer(int nAvions, int nFuels, int nGates, int nPistes, int nTechniques, int maxA){
+		frmGestionaero.initAeroport(nAvions, nFuels, nGates, nPistes, nTechniques, maxA);
 	}
 	
 	public void rafraichirInterface(){
-		// TODO - Rafraîchir Tableau Avions
 		// RAFRAICHIR LA LISTE DES AVIONS 
 		ArrayList<String> listeA = frmGestionaero.getAvionsInactifs();
-		cmbAvion.removeAllItems();
-		
-		for(String item : listeA){
-			cmbAvion.addItem(item);
+		if (cmbAvion.getItemCount() != listeA.size()){
+			cmbAvion.removeAllItems();
+			for(String item : listeA){
+				cmbAvion.addItem(item);
+			}
 		}
 		cmbAvion.setEnabled(listeA.size() > 0);
 		btnDecoller.setEnabled(listeA.size() > 0);
@@ -386,7 +364,6 @@ public class MainWindows {
 			tableModel.addRow(new Object[]{listeA.get(id), listeEA.get(id), listeRA.get(id)});
 		}
 		
-		// TODO - Rafraîchir Tableau Ressources
 		// RAFRAICHIR LA LISTE DES RESSOURCES
 		ArrayList<String> listeR = frmGestionaero.getRessources();
 		
@@ -397,9 +374,11 @@ public class MainWindows {
 		// RAFRAICHIR TABLEAU RESSOURCES
 	}
 	
-	public void decollerAvion(String nom){
-		frmGestionaero.startAvion(nom);
+	/*
+	public void startAvion(String nom, int action){
+		frmGestionaero.startAvion(nom, action);
 	}
+	*/
 	
 	
 }
