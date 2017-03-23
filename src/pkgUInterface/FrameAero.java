@@ -1,5 +1,4 @@
 package pkgUInterface;
-
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -8,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 import pkgControlleur.CtrlAeroport;
 
+// Frame qui sera appelé par la fenêtre principale
 public class FrameAero extends JFrame implements Runnable {
 	
 	private volatile CtrlAeroport aeroport; 
@@ -16,7 +16,7 @@ public class FrameAero extends JFrame implements Runnable {
 	private volatile ArrayList<String> listeEtatsAvions;
 	private volatile ArrayList<String> listeRessources; 
 	private volatile ArrayList<String> listeEtatsRessources;
-	private DefaultTableModel tableModel = new DefaultTableModel();
+	private DefaultTableModel tableModel = new DefaultTableModel();	
 	
 	@Override
 	public void run(){

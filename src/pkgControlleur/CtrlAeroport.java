@@ -2,6 +2,7 @@ package pkgControlleur;
 
 import java.util.ArrayList;
 
+// Classe "contrôleur" de gestion de l'Aeroport
 public class CtrlAeroport{
 
 	static Aeroport aeroport; 
@@ -69,7 +70,6 @@ public class CtrlAeroport{
 		
 	}
 
-
 	public ArrayList<String> getListeAvionsRessources() {
 		return aeroport.avions.getRessources();
 	}
@@ -83,8 +83,7 @@ public class CtrlAeroport{
 	public ArrayList<String> getRessources() {
 		ArrayList<String> listeR = aeroport.getNomsRessources();
 		
-		return listeR;
-		
+		return listeR;	
 	}
 	
 }

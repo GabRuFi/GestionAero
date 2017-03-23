@@ -1,5 +1,6 @@
 package pkgClasse;
 
+// Avion est un Thread, car plusieurs Avions peuvent agir en même temps
 public class Avion extends Thread 
 {
 	String name = "Avion";
@@ -18,16 +19,22 @@ public class Avion extends Thread
 	static Integer pistesLock = 0;
 	static Integer techniquesLock = 0;
 	
+	// Comptage du nombre d'avions ayant attérit ou décollé
 	public static Integer compteur = 0;
+	
+	// Le maximum d'avions qu'il est possible d'avoir. Fourni par l'utilisateur
 	public static Integer maxAvions;
 	
+	// Ces 3 booléens permettent de bloquer en attendant d'être synchronisé sur les actions de "debut", "analyse" et "fin"
 	public static Boolean waitForDebut = false;
 	public static Boolean waitForAnalyse = false;
 	public static Boolean waitForFin = false;
 	
+	// Délais pouvant être changés, pour simuler un temps d'attérissage, embarquement, etc. 
 	Integer delay = 100;
 	Integer delayLoop = 300;
 		
+	// Paramètres fournis par Aeroport
 	public Avion(int i, Integer nFuels, Integer nGates, Integer nPistes, 
 			Integer nTechniques, Integer maxA) 
 	{						
@@ -40,8 +47,10 @@ public class Avion extends Thread
 		techniques = new Techniques(nTechniques);			
 	}
 		
+	// Action "arrive" telle que décrite dans l'énoncé
 	public void arrive() 
-	{
+	{		
+		// Extraire le nom de l'action (la méthode)
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
 		etat = "Arrive";
 		logStart(method);
@@ -51,12 +60,14 @@ public class Avion extends Thread
 	
 	public void atterit() 
 	{
+		// Extraire le nom de l'action (la méthode)
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
 		etat = "Atterit";
 		logStart(method);	
 		
 		Integer i = -1;
-						
+		
+		// Tant qu'aucune ressource n'est disponible...
 		while(i == -1)
 		{		
 			synchronized (pistes) 
@@ -64,6 +75,7 @@ public class Avion extends Thread
 				Pistes pistes = this.getPistes();
 				i = pistes.get(this.index);
 				
+				// Si on a trouvé une ressource
 				if (i != -1)
 				{
 					pistesLock += 1;
@@ -106,12 +118,14 @@ public class Avion extends Thread
 
 	public void debarque() 
 	{
+		// Extraire le nom de l'action (la méthode)
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
 		etat = "Debarque";
 		logStart(method);
 		
 		Integer i = -1;
 		
+		// Tant qu'aucune ressource n'est disponible...
 		while(i == -1)
 		{		
 			synchronized (gates) 
@@ -119,6 +133,7 @@ public class Avion extends Thread
 				Gates gates = this.getGates();
 				i = gates.get(this.index);
 				
+				// Si on a trouvé une ressource
 				if (i != -1)
 				{
 					gatesLock += 1;
@@ -158,6 +173,7 @@ public class Avion extends Thread
 	
 	public void gare() 
 	{
+		// Extraire le nom de l'action (la méthode)
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
 		etat = "Se gare";
 		logStart(method);
@@ -167,6 +183,7 @@ public class Avion extends Thread
 	
 	public void sort() 
 	{
+		// Extraire le nom de l'action (la méthode)
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
 		etat = "Sort";
 		logStart(method);
@@ -176,12 +193,14 @@ public class Avion extends Thread
 	
 	public void controle() 
 	{
+		// Extraire le nom de l'action (la méthode)
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
 		etat = "Passe au contrôle";
 		logStart(method);
 		
 		Integer i = -1;
 		
+		// Tant qu'aucune ressource n'est disponible...
 		while(i == -1)
 		{		
 			synchronized (techniques) 
@@ -189,6 +208,7 @@ public class Avion extends Thread
 				Techniques techniques = this.getTechniques();
 				i = techniques.get(this.index);
 				
+				// Si on a trouvé une ressource
 				if (i != -1)
 				{
 					techniquesLock += 1;
@@ -229,12 +249,14 @@ public class Avion extends Thread
 
 	public void remplit() 
 	{
+		// Extraire le nom de l'action (la méthode)
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
 		etat = "Remplit";
 		logStart(method);
 		
 		Integer i = -1;
 		
+		// Tant qu'aucune ressource n'est disponible...
 		while(i == -1)
 		{		
 			synchronized (fuels) 
@@ -242,6 +264,7 @@ public class Avion extends Thread
 				Fuels fuels = this.getFuels();
 				i = fuels.get(this.index);
 				
+				// Si on a trouvé une ressource
 				if (i != -1)
 				{
 					fuelsLock += 1;
@@ -282,12 +305,14 @@ public class Avion extends Thread
 	
 	public void embarque() 
 	{
+		// Extraire le nom de l'action (la méthode)
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
 		etat = "Embarque";
 		logStart(method);
 		
 		Integer i = -1;
 		
+		// Tant qu'aucune ressource n'est disponible...
 		while(i == -1)
 		{		
 			synchronized (gates) 
@@ -295,6 +320,7 @@ public class Avion extends Thread
 				Gates gates = this.getGates();
 				i = gates.get(this.index);
 				
+				// Si on a trouvé une ressource
 				if (i != -1)
 				{
 					gatesLock += 1;
@@ -334,12 +360,14 @@ public class Avion extends Thread
 
 	public void decolle() 
 	{
+		// Extraire le nom de l'action (la méthode)
 		String method = new Object(){}.getClass().getEnclosingMethod().getName();		
 		etat = "Decolle";
 		logStart(method);
 		
 		Integer i = -1;
 		
+		// Tant qu'aucune ressource n'est disponible...
 		while(i == -1)
 		{		
 			synchronized (pistes) 
@@ -347,6 +375,7 @@ public class Avion extends Thread
 				Pistes pistes = this.getPistes();
 				i = pistes.get(this.index);
 				
+				// Si on a trouvé une ressource
 				if (i != -1)
 				{
 					pistesLock += 1;
@@ -421,32 +450,29 @@ public class Avion extends Thread
 		atterir();		
 	}	
 	
+	// Log une action faite par l'Avion d'indice "i"
 	public void log(String action)
 	{
 		System.out.println(this.index + "." + this.name + " : " + action);			
 	}
 	
+	// Log le début d'une action
 	public void logStart(String action)
 	{
 		log("Débute - " + action);
 	}
 	
+	// Log la fin d'une action
 	public void logEnd(String action)
 	{
 		log("Termine - " + action);
 	}
 	
+	// Log un temps d'attente
 	public void logSleep()
 	{
 		log("Sleep/wait");
 	}
-	
-	/*
-	public static void main(String[] args) {
-		Avion avion = new Avion(0, 2 ,2, 2, 2);			
-		avion.exec();
-	}
-	*/	
 	
 	public Fuels getFuels()
 	{
@@ -483,6 +509,9 @@ public class Avion extends Thread
 		return etat;
 	}
 	
+	// Augmenter le nombre d'Avions ayant décollé ou attéri. 
+	//   - La variable "compteur" est protégée en lecture et écriture pendant l'incrémentation
+	//   - Losque le compteur dépasse maxAvions, on set les variables de synchronisation à 'true' 
 	public static void increaseCompteur()
 	{
 		synchronized (compteur)
@@ -492,10 +521,13 @@ public class Avion extends Thread
 			if (compteur >= maxAvions)
 			{
 				waitForDebut = true;
+				waitForAnalyse = true;
+				waitForFin = true;
 			}
 		}
 	}
 	
+	// Pour remettre le compteur à zéro
 	public static void resetCompteur()
 	{
 		synchronized (compteur)
@@ -504,6 +536,7 @@ public class Avion extends Thread
 		}
 	}
 	
+	// Action de début
 	public static void debut()
 	{
 		resetCompteur();
@@ -513,6 +546,7 @@ public class Avion extends Thread
 		}
 	}
 		
+	// Action d'analyse
 	public static void analyse()
 	{
 		synchronized (waitForAnalyse) {
@@ -520,6 +554,7 @@ public class Avion extends Thread
 		}
 	}
 	
+	// Action de fin
 	public static void fin()
 	{
 		synchronized (waitForFin) {
@@ -529,11 +564,14 @@ public class Avion extends Thread
 		}
 	}
 	
+	// Lister des ressources acquises
 	public String getRessourceAcquise()
 	{
 		return ressourceAcquise;
 	}
 		
+	
+	// Lance le décollage et attérissage de l'Avion (en séquence) et fait un log en console 
 	@Override
 	public void run()
 	{

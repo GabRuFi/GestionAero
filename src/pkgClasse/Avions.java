@@ -2,6 +2,7 @@ package pkgClasse;
 
 import java.util.ArrayList;
 
+// Classe servant à mettre N avions en parallèle
 public class Avions 
 {
 	String name = "Avions";
@@ -14,6 +15,7 @@ public class Avions
 	{
 		this.N = amount;							
 		
+		// Créer N Avions
 		for (int i = 0; i < N; i++)
 		{									
 			Avion avion = new Avion(i, nFuels, nGates, nPistes, nTechniques, maxA);										
@@ -65,18 +67,6 @@ public class Avions
 		this.avions.get(index).setNom(newName);
 	}
 	
-	/*
-	public static void main(String[] args) 
-	{
-		Avions avions = new Avions(25, 2, 2, 2, 2);	
-		
-		for (int i = 0; i < avions.N; i++)
-		{
-			avions.avions.get(i).start();
-		}	
-	}
-	*/
-	
 	public ArrayList<String> getNomsAvions(){
 		ArrayList<String> tblNoms = new ArrayList<String>();
 		synchronized (avions) 
@@ -89,16 +79,19 @@ public class Avions
 		return tblNoms;
 	}
 	
+	// Lancer l'exécution d'un thread Avion
 	public void startAvion(int index)
 	{	
 		this.avions.get(index).start();
 	}
 	
+	// Lancer uniquement le décollage
 	public void startDecollage(int index)
 	{	
 		this.avions.get(index).execDecollage();
 	}
 
+	// Lancer uniquement l'attérissage
 	public void startAtterrissage(int index)
 	{	
 		this.avions.get(index).execAtterrissage();
@@ -116,6 +109,7 @@ public class Avions
 		return tblRessources;
 	}
 
+	// Avion la liste des Avions inactifs
 	public ArrayList<String> getAvionsInactifs() {
 		ArrayList<String> tblAvionsInactifs = new ArrayList<String>();
 		synchronized (avions) 

@@ -9,25 +9,31 @@ import pkgClasse.Pistes;
 import pkgClasse.Techniques;
 import pkgClasse.Avion;
 
+// Classe de gestion de l'Aeroport
 public class Aeroport {
 			
 	String name = "Aeroport";
 	
+	// Nombre de chaque ressource
 	public Integer nAvions;
 	public Integer nFuels;
 	public Integer nGates;
 	public Integer nPistes;
 	public Integer nTechniques;
 	
+	// Les ressources en soi
 	public Fuels fuels;
 	public Gates gates;
 	public Pistes pistes;
 	public Techniques techniques;	
 	
+	// Les Avions
 	public Avions avions;
 	
+	// Le nombre maximum d'avions ayant attéri/décollé avant de lancer l'analyse
 	public Integer maxAvions;
 	
+	// Contruction d'un Aeroport à l'aide des valeurs fournies par l'utilisateur
 	public Aeroport(Integer nAvions, Integer nFuels, 
 			Integer nGates, Integer nPistes, Integer nTechniques, Integer maxA) 
 	{										
@@ -38,25 +44,29 @@ public class Aeroport {
 		this.nTechniques = nTechniques;
 		this.maxAvions = maxA;
 				
+		// On met le nAvions Avions en parallèle
 		avions = new Avions(nAvions, nFuels, nGates, nPistes, nTechniques, maxAvions);					
 	}	
 	
+	// Procédure d'analyse à lancer quand on atteint le nombre maximum d'attérissages/décollages
 	public void lancerAnalyse()
 	{			
+		// On protège les 3 variables de synchronisation
 		synchronized(Avion.waitForDebut)
 		{
 			synchronized(Avion.waitForAnalyse)
 			{
 				synchronized(Avion.waitForFin)
 				{
-			
+					// Si pas en procédure d'analyse, on soulève une erreur dans le log (similaire à vérifier une propriété)
 					if (Avion.waitForDebut == false)
 					{
 						System.out.println("Vous devez attendre d'avoir le bon nombre d'avions...");
 						return;
 					}
 					else
-					{
+					{						
+						// On exécute les 3 actions demandées
 						Avion.debut();								
 						Avion.analyse();
 						Avion.fin();
@@ -90,7 +100,7 @@ public class Aeroport {
 	{
 		return Avion.compteur;
 	}
-	
+		
 	public ArrayList<String> getNomsAvions(){
 		return this.avions.getNomsAvions();
 	}
@@ -102,75 +112,7 @@ public class Aeroport {
 
 	public ArrayList<String> getNomsRessources() {
 		ArrayList<String> listeR = new ArrayList<String>(); 
-		
-		/*
-		synchronized (fuels) 
-		{
-			for (int index = 0; index < fuels.getN(); index++){
-				// listeR.addAll(fuels.obtenirNomsRessources());
-			}
-		}
-		
-		synchronized (gates) 
-		{
-			Gates tblG = gates;
-			for (int index = 0; index < tblG.getN(); index++){
-				listeR.addAll(gates.obtenirNomsRessources());
-			}
-		}
-		
-		synchronized (pistes) 
-		{
-			Pistes tblP = pistes;
-			for (int index = 0; index < tblP.getN(); index++){
-				listeR.addAll(pistes.obtenirNomsRessources());
-			}
-		}
-		
-		synchronized (techniques) 
-		{
-			Techniques tblT = techniques;
-			for (int index = 0; index < tblT.getN(); index++){
-				listeR.addAll(techniques.obtenirNomsRessources());
-			}
-		}
-		*/
-		
-		return listeR;
-	}
 	
-	/*
-	public static void main(String[] args) {
-		
-		Integer nA = 6;
-		Integer nF = 2;
-		Integer nG = 2;
-		Integer nP = 2;
-		Integer nT = 2;
-		
-		Aeroport aeroport = new Aeroport(nA, nF, nG, nP, nT);
-		aeroport.avions.setNomAvion(0, "Led Zeppelin");
-		aeroport.avions.setNomAvion(1, "Gyrophare");
-		aeroport.avions.setNomAvion(2, "Airbus");
-		aeroport.avions.setNomAvion(3, "Jet");
-		aeroport.avions.setNomAvion(4, "Commodor");
-		aeroport.avions.setNomAvion(5, "Newton");
-		
-		System.out.println("================");
-		System.out.println("     Set-up     ");
-		System.out.println("================");
-		
-		// aeroport.avions.avions.get(4).getPistes().get(4);
-		// aeroport.avions.avions.get(2).getFuels().get(2);
-		
-		System.out.println("================");
-		System.out.println("Start simulation");
-		System.out.println("================");
-		
-		for (int i = 0; i < aeroport.nAvions; i++)
-		{						
-			aeroport.avions.startAvion(i);
-		}		
-	}
-	*/	
+		return listeR;
+	}	
 }

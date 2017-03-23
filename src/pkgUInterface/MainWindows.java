@@ -16,11 +16,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.Timer;
 
 import pkgControlleur.CtrlAeroport;
 
 import javax.swing.JTabbedPane;
 
+// Interface principale pour l'utilisateur. Gère les boutons et l'affichage.
 public class MainWindows {
 	
 	public JComboBox cmbAvion; 
@@ -30,6 +32,16 @@ public class MainWindows {
 	public JTable tblRessources;
 	
 	private FrameAero frmGestionaero;
+	
+	private Timer timer;
+	
+	public ActionListener performRefresh = new ActionListener()
+	{
+		public void actionPerformed(ActionEvent evt)
+		{					
+			rafraichirInterface();
+		}
+	};
  
 	
 	/**
@@ -199,6 +211,10 @@ public class MainWindows {
 		});
 		
 		SwingUtilities.invokeLater(frmGestionaero);
+		
+		timer = new Timer(100, performRefresh);
+		timer.setRepeats(true);
+		timer.start();
 		
 	}
 	
