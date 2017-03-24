@@ -1,3 +1,11 @@
+GestionAero - Projet 1 Étape 2 - Spécification formelle et vérification de logiciels 
+Équipe 19: 
+	Pierre-Marc Bonneau 
+	Idrissa Boubacar Toumane 
+	Catherine Robitaille 
+	Steven Thomas 
+
+
 Bonjour apprenti gestionnaire d'aéroport et bienvenue dans l'application GestionAero! Suivez nos instructions pour bien comprendre ce projet et utiliser votre gestionnnaire d'aéroport comme un professionnel... 
 
 Pour s'assurer d'avoir un projet Eclipse qui fonctionne, vous aurez les fichiers: 
@@ -40,3 +48,4 @@ Tous les avions arriverons immédiatement, prêts à atterrir - mais pas tous en mê
 
 
 Bonne simulation! 
+
