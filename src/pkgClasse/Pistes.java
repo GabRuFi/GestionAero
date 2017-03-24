@@ -2,6 +2,7 @@ package pkgClasse;
 
 import java.util.ArrayList;
 
+// Voir la classe Resources pour l'implantation. Ce n'est qu'un cas particulier.
 public class Pistes extends Resources 
 {
 	public Pistes(Integer amount) {
